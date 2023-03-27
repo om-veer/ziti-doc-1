@@ -8,6 +8,4 @@ This solution has 4 major documents
 
 3- ZAC.md                             - use to access the controller using GUI access of the controller
 
-4- Ziti_Network_Digital_Ocean.md      - use to create the ziti services/network/verification
-
-DO_network.png                        - network diagram to configure the ziti network test cases using Digital Ocean cloud.
+4- Ziti_Network_Digital_Ocean.md      - use to create the ziti services/network/verification. You can see the network diagram in this fie which show how to connect the network and configure the step by step.
