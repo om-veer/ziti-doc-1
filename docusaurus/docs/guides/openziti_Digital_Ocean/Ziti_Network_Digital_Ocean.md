@@ -4,16 +4,16 @@ Use follwing setup to create the ziti network
 Ziti controller configuration:
 
 # 1- identities configuration: 
-login to controller API in the path of ziti binary home directry:
+- login to controller API in the path of ziti binary home directry:
 ```
 ./ziti edge login localhost:8441 
 ```
-Create an identity for the open ziti clients and assign an attribute. I use "ubuntusg" for ubuntu tunneler and “ompc1” for window PC. We'll use this attribute when I'll configure the ssh service.
+- Create an identity for the open ziti clients and assign an attribute. I use "ubuntusg" for ubuntu tunneler and “ompc1” for window PC. We'll use this attribute when I'll configure the ssh service.
 ```
 ./ziti edge create identity user ompc1 -a window -o ompc1.jwt
 ./ziti edge create identity user ubuntusg -a ubuntu -o ubuntusg.jwt
 ```
-Verification of Identity configuration:
+- Verification of Identity configuration:
 
 ```
 root@OMSINCN:~/.ziti/quickstart/OMSINCN/ziti-bin/ziti-v0.27.5# ./ziti edge list identities
@@ -34,7 +34,7 @@ Note: Admin type identities can access all the bind configuration without adding
 
 # Configuration of SSH service
 
-2- Create the intercept.v1 and host.v1 configuration:
+- Create the intercept.v1 and host.v1 configuration:
 
 Create an intercept.v1 config. This config is used to instruct the client-side tunneler how to correctly intercept the targeted traffic and put it onto the overlay.
 
@@ -71,7 +71,7 @@ root@OMSINCN:~/.ziti/quickstart/OMSINCN/ziti-bin/ziti-v0.27.5# ./ziti edge list 
 │ 6h7qQaAKKs94hBBYgAxwZe │ sgintercept          │ intercept.v1 │
 ╰────────────────────────┴──────────────────────┴──────────────╯
 ```
-3- Services Configurations:
+- Services Configurations:
 
 Create a service to associate the two configs created previously into a service. BGLSR use to create services for the BGL ER and server. SGRTRSR use to create the services for SG ER/ SG client.
 
@@ -92,7 +92,7 @@ root@OMSINCN:~/.ziti/quickstart/OMSINCN/ziti-bin/ziti-v0.27.5# ./ziti edge list 
 ╰────────────────────────┴─────────┴────────────┴─────────────────────┴────────────╯
 ```
 
-4- Dial and Bind Service policy:
+- Dial and Bind Service policy:
 
 Create a service policy for dial and bind the configurations. Its like same way as APPWAN doing in MOP. Bind policy will configured on hosting the services/server side configuration. In our case BLR ER act as bind services and SG router/ompc1/ubuntu tunneler acts as dial the bind services. If identities has admin type then they can access the all bind service policy without assigning into dial policy. If the identities has user/router type then we must have to assign thease identies into dial policy.
 
@@ -132,7 +132,7 @@ root@OMSINCN:~/.ziti/quickstart/OMSINCN/ziti-bin/ziti-v0.27.5# ./ziti edge list 
 ╰────────────────────────┴───────────────────────────┴──────────┴───────────────┴────────────────┴─────────────────────╯
 ```
 
-5- ER policy(optional):
+- ER policy(optional):
 
 By default all the services will bind to all ER. We can manualy change the router policy using bellow.
 ```
@@ -169,11 +169,11 @@ Log from the Bangalore ER 10.47.0.6
 2- Verification from Ubuntu tunneler OMSGUBUNTU to access the BGLCL.ziti(SSH server) using BLR ER
 
 ![Diagram](imag/from_Ubuntu_tunneler_OMSGUBUNTU_to_access_BGLCL.ziti.png)
+
 Log from BLR ER 
 
 ![Diagram](imag/BLR_ER.png)
  
-
 3- Verification from ompc1 window pc to SSHSG client:
 ![Diagram](imag/ompc1_window_pc_SSHSG_client.png)
 
@@ -182,9 +182,9 @@ Log from OMSGER1
 
  
 
-More usefull command from controller:
+- More usefull command from controller:
 ```
-./ziti edge login localhost:8441
+./ziti edge login [controller IP]:8441
 
 ./ziti fabric list links
 
@@ -196,7 +196,7 @@ More usefull command from controller:
 
 ./ziti fabric list terminators
 ```
-Delete the Identity
+- Delete the Identity
 ```
 ./ziti edge delete identity user ompc1
 ```
