@@ -9,18 +9,18 @@ NOTE
 When running Ziti Administration Console, you should also prefer using https over http. In order to do this you will need to either create, or copy the certificates needed. Each section below tries to show you how to accomplish this on your own.
 
 # Cloning From GitHub
-These steps are applicable to both the local, no docker as well as the hosted yourself deployments. Do note, these steps expect you have the necessary environment variables established in your shell. If you used the default parameters, you can establish these variables using the file at ${HOME}/.ziti/quickstart/$(hostname)/$(hostname).env. To deploy ZAC after following one of those guides, you can perform the following steps.
+These steps are applicable to both the local, no docker as well as the hosted yourself deployments. Do note, these steps expect you have the necessary environment variables established in your shell. If you used the default parameters, you can establish these variables using the file at `${HOME}/.ziti/quickstart/$(hostname)/$(hostname).env`. To deploy ZAC after following one of those guides, you can perform the following steps.
 
-Clone the ziti-console repo from github:
+- Clone the ziti-console repo from github:
 ```
 git clone https://github.com/openziti/ziti-console.git "${ZITI_HOME}/ziti-console"
 ```
-Install Node modules:
+- Install Node modules:
 ```
 cd "${ZITI_HOME}/ziti-console"
 npm install
 ```
-Use the ziti-controller certificates for the Ziti Console:
+- Use the ziti-controller certificates for the Ziti Console:
 
 Link a server certificate into the ziti-console directory. Your web browser won't recognize it, but it's sufficient for this exercise to have server TLS for your ZAC session.
 ```
@@ -67,12 +67,12 @@ LISTEN 0      511                *:1408             :    users:(("node",pid=2601
 ```
  
 
-Login and use ZAC
+# Login and use ZAC
 Now we can access from anywhere
 
 https://${ZITI_EDGE_CONTROLLER_HOSTNAME}:8443   E.g https://157.245.203.171:8443/
 
-At this point you should be able to navigate to both: https://${ZITI_EDGE_CONTROLLER_HOSTNAME}:8443and see the ZAC login screen. (The TLS warnings your browser will show you are normal - it's because these steps use a self-signed certificate generated in the install process)
+At this point you should be able to navigate to both: https://${ZITI_EDGE_CONTROLLER_HOSTNAME}:8443 and see the ZAC login screen. (The TLS warnings your browser will show you are normal - it's because these steps use a self-signed certificate generated in the install process)
 
 Set the controller as shown (use the correct URL):
 
