@@ -151,9 +151,9 @@ root@OMSINCN:~/.ziti/quickstart/OMSINCN/ziti-bin/ziti-v0.27.5# ./ziti edge list 
 ╰────────────────────────┴───────────────────────────────┴──────────────────────┴──────────────────────╯
 ```
 
-Client testing Varification:
+# Client testing Varification:
 
-1- accessing the BLR ssh server(206.189.136.247) from SG ssh client(OMSGCL2)
+- accessing the BLR ssh server(206.189.136.247) from SG ssh client(OMSGCL2)
 
 add Ip route 100.64.0.0/10 in ssh client machine towards the SG ER
 
@@ -166,7 +166,7 @@ Log from the Bangalore ER 10.47.0.6
 
 ![Diagram](imag/log_from_BLR_ER.png)
 
-2- Verification from Ubuntu tunneler OMSGUBUNTU to access the BGLCL.ziti(SSH server) using BLR ER
+- Verification from Ubuntu tunneler OMSGUBUNTU to access the BGLCL.ziti(SSH server) using BLR ER
 
 ![Diagram](imag/from_Ubuntu_tunneler_OMSGUBUNTU_to_access_BGLCL.ziti.png)
 
@@ -174,7 +174,7 @@ Log from BLR ER
 
 ![Diagram](imag/BLR_ER.png)
  
-3- Verification from ompc1 window pc to SSHSG client:
+- Verification from ompc1 window pc to SSHSG client:
 ![Diagram](imag/ompc1_window_pc_SSHSG_client.png)
 
 Log from OMSGER1
