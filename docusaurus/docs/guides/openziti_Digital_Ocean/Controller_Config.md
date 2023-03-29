@@ -1,23 +1,27 @@
-# Steps to configure the controller
-Update the VM  
-```
-apt update
-```
-Upgrade the VM 
-```
-apt upgrade
+---
+sidebar_position: 10
+sidebar_label: Controller
+title: Controller Config 
+---
+
+# 1.0 Configure the controller
+## 1.1 Update the apt repo on VM
+```bash
+sudo apt update
 ```
 
-# Firewall
+## 1.2 Upgrade the apt on VM
+```bash
+sudo apt upgrade
+```
+
+## 1.3 Firewall
 The first issue you will need to deal with is opening some ports. A network will consist of at least one controller and at least one edge router. Both of these components will require ports to be open. For the controller you will need to open a range of ports through your firewall. Any additional Ports you need to allow in the firewall.
 
-8440/tcp: Edge Controller providing router control plane
-
-8441/tcp: Edge Controller providing client sessions
-
-8442/tcp: Edge Router providing client connections
-
-8443/tcp: Ziti Admin Console (ZAC) [optional]
+- 8440/tcp: Edge Controller providing router control plane
+- 8441/tcp: Edge Controller providing client sessions
+- 8442/tcp: Edge Router providing client connections
+- *8443/tcp: Ziti Admin Console (ZAC) [optional]*
 
 # Prerequisites
 Make sure you have jq and curl installed
