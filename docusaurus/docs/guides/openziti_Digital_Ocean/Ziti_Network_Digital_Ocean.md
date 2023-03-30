@@ -200,7 +200,7 @@ Log from OMSGER1
 ```
 ./ziti edge delete identity user ompc1
 ```
-Update the identity
+- Update the identity
 ```
 ./ziti edge update identity ubuntusg -a ubuntu
 ```
