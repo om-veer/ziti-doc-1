@@ -3,7 +3,7 @@ Use follwing setup to create the ziti network
 ![Diagram](imag/DO_network.png)
 Ziti controller configuration:
 
-# 1- identities configuration: 
+# identities configuration: 
 - login to controller API in the path of ziti binary home directry:
 ```
 ./ziti edge login localhost:8441 
