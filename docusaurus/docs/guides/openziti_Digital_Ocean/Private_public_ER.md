@@ -1,17 +1,17 @@
 # Create new router using open ziti
 
- Update the VM 
+## 1.1 Update the VM 
  
 ```
 apt update
 ```
 
-Update the VM 
+## 1.2 Update the VM 
 ```
 apt upgrade
 ```
 
-Install binary into the ziti home directory using any of following 2 methods
+## 1.3 Install binary into the ziti home directory using any of following 2 methods
 ```
 source /dev/stdin <<< "$(wget -qO- https://raw.githubusercontent.com/openziti/ziti/db71b1a4a6d70feff70cde3962d2c9f9148a0dd5/quickstart/docker/image/ziti-cli-functions.sh)" getZiti
 ```
@@ -21,9 +21,9 @@ source /dev/stdin <<< "$(wget -qO- https://get.openziti.io/quick/ziti-cli-functi
 ```
 Create config.yaml in the binary installed directory like ZITI_HOME=~/.ziti/quickstart/VM-hstname/ziti-bin/ziti-
 
-Note: By default ER router config will be on tproxy mode. Host made only requres on Public router or hosted router. Never use host mode on private router or Egress edge router.
+*Note: By default ER router config will be on tproxy mode. Host made only requres on Public router or hosted router. Never use host mode on private router or Egress edge router.*
 
-  Example of config.yaml
+## 1.4 Configuration of config.yaml
 ```
 v: 3
 identity:
@@ -74,48 +74,48 @@ forwarder:
   linkDialQueueLength: 1000
   linkDialWorkerCount: 32
 ```
- Create the new folder to install the cert file in the ZITI_HOME path
+## 1.5 Create the new folder to install the cert file in the ZITI_HOME path
  ```
  mkdir certs
 ```
-Edge login to controller
+## 1.6 Edge login to controller
 ```
  ./ziti edge login "CONTROLLER PUB_IP":8441   #Where 8441 is the  ZITI_EDGE_CONTROLLER_PORT. You have to provide the user name and password which you created at the time of controller installation default username is admin.
 ```
-Create the Edge router using new-router as the name of ER and enroll.jwt is the name of jwt file
+## 1.7 Create the Edge router using 'new-router' as the name of ER and 'enroll.jwt' is the name of jwt file
 
 ziti edge create edge-router $ROUTER_NAME \
 --jwt-output-file $ROUTER_NAME.jwt
 ```
 ./ziti edge create edge-router new-router -t -o enroll.jwt
 ```
-For Private ER with Edge and tunneler
+## 1.8 (Optional) *For Private ER with Edge and tunneler*
 
 ziti edge create edge-router $ROUTER_NAME \
 --jwt-output-file $ROUTER_NAME.jwt \
 --tunneler-enabled --no-traversal
 
- Assign edge router attributes. I assign private attribute
+## 1.9 Assign edge router attributes. I assign private attribute
  ```
  ./ziti edge update edge-router new-router -a private
 ```
-  Register the identity create above enroll.jwt and config.yaml   
+## 1.10 Register the identity create above enroll.jwt and config.yaml   
   ```
   ./ziti-router enroll config.yaml --jwt enroll.jwt
 ```
- Update the identity using 
+## 1.11 *(Optional) Update the identity using* 
  ```
  ./ziti edge update identity new-router -a hosts
 ```
-Verify the create edge router using 
+## 1.12 *(Optional) Verify the create edge router using* 
 ```
 ./ziti edge list edge-routers
 ```
-Run the edge router using config.yaml file
+## 1.13 Run the edge router using config.yaml file   *Note: Skip this step if you follow next step(1.14)*
 ```
 ./ziti-router run config.yaml
 ```
-To automate the command ./ziti-router run config.yaml 
+## 1.14 To automate the command ./ziti-router run config.yaml 
 Create the router.service in same directry where ziti binary downloaded
 ```
 root@ubuntu-s-1vcpu-2gb-amd-blr1-01:~/.ziti/quickstart/ubuntu-s-1vcpu-2gb-amd-blr1-01/ziti-bin/ziti-v0.27.5# cat router.service
@@ -143,7 +143,7 @@ sudo systemctl enable --now ziti-router
 
 sudo systemctl -q status ziti-router 
 ```
-# Local DNS entry
+## 1.15 Local DNS entry
 
 Add the local Ip to the DNS for ER running in tunneler mode.Edit the resolved.conf file 
 ```
@@ -164,25 +164,11 @@ systemctl restart systemd-resolved.service
 
 resolvectl
 ```
-# Delete the ER
-```
-ziti edge delete edge-routers $ROUTER_NAME
-ziti edge delete edge-routers $ROUTER_ID
-```
-# Update the ER
-```
-ziti edge update edge-router $ROUTER_NAME [flags]
-ziti edge update edge-router $ROUTER_ID [flags]
-```
-example to update attributes : 
-```
-./ziti edge update edge-router new-router -a private
-```
-example to Update the identity using 
-```
-./ziti edge update identity new-router -a hosts
-```
- Configure the config.yaml for public router: add the bellow line in link listner
+Now we have completed the Private ER configuration
+
+
+# Configure the config.yaml for public router: add the bellow line in link listner
+Following example of Public ER in addition to config.yaml of Private ER which configured in step 1.4 
 ```
 link:
 dialers:
@@ -198,7 +184,26 @@ advertise: tls:165.232.177.92:10080 # 165.232.177.92 is CTRL ip and 10080 CTRL p
 options:
 outQueueSize: 4
 ```
-Verify the ER 
+# Some usefull command for the ER 
+- Verify ER status
 ```
 ./ziti edge list edge-routers
+```
+- Delete the ER
+```
+ziti edge delete edge-routers $ROUTER_NAME
+ziti edge delete edge-routers $ROUTER_ID
+```
+- Update the ER
+```
+ziti edge update edge-router $ROUTER_NAME [flags]
+ziti edge update edge-router $ROUTER_ID [flags]
+```
+- example to update attributes : 
+```
+./ziti edge update edge-router new-router -a private
+```
+- example to Update the identity using 
+```
+./ziti edge update identity new-router -a hosts
 ```

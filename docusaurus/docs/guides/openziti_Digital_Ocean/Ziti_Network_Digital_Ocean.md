@@ -1,12 +1,12 @@
 Use follwing setup to create the ziti network
 
 ![Diagram](imag/DO_network.png)
-Ziti controller configuration:
+Ziti Network/Services configuration:
 
 # identities configuration: 
 - login to controller API in the path of ziti binary home directry:
 ```
-./ziti edge login localhost:8441 
+./ziti edge login [controller_ip/url]:8441 
 ```
 - Create an identity for the open ziti clients and assign an attribute. I use "ubuntusg" for ubuntu tunneler and “ompc1” for window PC. We'll use this attribute when I'll configure the ssh service.
 ```

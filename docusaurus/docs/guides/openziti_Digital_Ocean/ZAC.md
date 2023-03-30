@@ -68,17 +68,17 @@ LISTEN 0      511                *:1408             :    users:(("node",pid=2601
  
 
 # Login and use ZAC
-Now we can access from anywhere
+- Now we can access from anywhere
 
 https://${ZITI_EDGE_CONTROLLER_HOSTNAME}:8443   E.g https://157.245.203.171:8443/
 
-At this point you should be able to navigate to both: https://${ZITI_EDGE_CONTROLLER_HOSTNAME}:8443 and see the ZAC login screen. (The TLS warnings your browser will show you are normal - it's because these steps use a self-signed certificate generated in the install process)
+- At this point you should be able to navigate to both: https://${ZITI_EDGE_CONTROLLER_HOSTNAME}:8443 and see the ZAC login screen. (The TLS warnings your browser will show you are normal - it's because these steps use a self-signed certificate generated in the install process)
 
-Set the controller as shown (use the correct URL):
+- Set the controller as shown (use the correct URL):
 
-set edge controller name as the hostname of the controller
+- set edge controller name as the hostname of the controller
 
-set url https://hostname:8441  click the setcontroller
+- set url https://hostname:8441  click the setcontroller
 
-login the username and password
+- login the username and password
 ![Diagram](imag/console.png)
