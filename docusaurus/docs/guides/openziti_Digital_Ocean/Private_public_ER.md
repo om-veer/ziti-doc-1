@@ -2,13 +2,13 @@
 
 ## 1.1 Update the VM 
  
-```
-apt update
+```bash
+sudo apt update
 ```
 
 ## 1.2 Update the VM 
-```
-apt upgrade
+```bash
+sudo apt upgrade
 ```
 
 ## 1.3 Install binary into the ziti home directory using any of following 2 methods
