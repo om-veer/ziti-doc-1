@@ -1,4 +1,4 @@
-# ziti-doc
+# README
 This document has discribe the step by step to create the Open ziti controller/Private/public ER/ZAC/ziti services.
 This solution has 4 major documents
 
