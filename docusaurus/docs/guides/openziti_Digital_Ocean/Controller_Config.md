@@ -23,8 +23,8 @@ The first issue you will need to deal with is opening some ports. A network will
 - 8442/tcp: Edge Router providing client connections
 - *8443/tcp: Ziti Admin Console (ZAC) [optional]*
 
-# Prerequisites
-Make sure you have jq and curl installed
+## 1.4 Prerequisites
+**Make sure you have jq and curl installed**
 ```
 export EXTERNAL_DNS="$(curl -s eth0.me)"
 export EXTERNAL_IP="$(curl -s eth0.me)"
@@ -38,19 +38,13 @@ export ZITI_EDGE_ROUTER_PORT=8442
 ```
  
 
-# Run expressInstall:
-```
+## 1.5 Run expressInstall:
+```bash
  source /dev/stdin <<< "$(wget -qO- https://get.openziti.io/quick/ziti-cli-functions.sh)"; expressInstall
 ```
- 
-
-Example:
+**Example Output:**
 ```
-root@OMSINER:~# source /dev/stdin <<< "$(wget -qO- https://get.openziti.io/quick/ziti-cli-functions.sh)"; expressInstall
-
-```
-Output:
-```                     _   _     _
+                      _   _     _
                 ____ (_) | |_  (_)
                |_  / | | | __| | |
                 / /  | | | |_  | |
@@ -172,13 +166,13 @@ Start your Ziti Edge Router by running : startRouter
 
 [1]+  Done                    "${ZITI_BIN_DIR-}/ziti-controller" run "${ZITI_HOME_OS_SPECIFIC}/${ZITI_EDGE_CONTROLLER_RAWNAME}.yaml" &> "${log_file}"
 ```
-# systemd
+## 1.6 systemd
 To generate the systemd unit files, run:
 ```
 root@OMSINER:~# createControllerSystemdFile
 createRouterSystemdFile "${ZITI_EDGE_ROUTER_RAWNAME}"
 ```
-Output:
+**Output:**
 ```
 Controller systemd file written to: /root/.ziti/quickstart/OMSINER/OMSINER.service
 Router systemd file written to: /root/.ziti/quickstart/OMSINER/OMSINER-edge-router.service
@@ -186,7 +180,6 @@ Router systemd file written to: /root/.ziti/quickstart/OMSINER/OMSINER-edge-rout
 Before you run the controller and router with systemd you need to stop them if they're currently running.
 ```
 sudo systemctl stop --now ziti-controller
-
 sudo systemctl stop --now ziti-router
 ```
 After the systemd service units are generated, you can then install them by running:
@@ -197,17 +190,17 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now ziti-controller
 sudo systemctl enable --now ziti-router
 ```
-Output:
+**Output:**
 ```
 Created symlink /etc/systemd/system/multi-user.target.wants/ziti-controller.service → /etc/systemd/system/ziti-controller.service.
 Created symlink /etc/systemd/system/multi-user.target.wants/ziti-router.service → /etc/systemd/system/ziti-router.service.
 ```
-Check the status of router and controller:
+## 1.7 Check the status of router and controller:
 ```
 root@OMSINER:~# sudo systemctl -q status ziti-controller --lines=0 --no-pager
 root@OMSINER:~#sudo systemctl -q status ziti-router --lines=0 --no-pager
 ```
-Output:
+**Output:**
 ```
 ziti-controller.service - Ziti-Controller
      Loaded: loaded (/etc/systemd/system/ziti-controller.service; enabled; preset: enabled)
@@ -228,28 +221,28 @@ ziti-router.service - Ziti-Router for OMSINER-edge-router
      CGroup: /system.slice/ziti-router.service
              └─20927 /root/.ziti/quickstart/OMSINER/ziti-bin/ziti-v0.27.5/ziti-router run /root/.ziti/quickstart/OMSINER/OMSINER-edge-ro…
 ```
-Adding Environment Variables Back to the Shell
+## 1.8 Adding Environment Variables Back to the Shell
 ```
 root@OMSINER:~# source ~/.ziti/quickstart/$(hostname -s)/$(hostname -s).env
 ```
-Output:
+**Output:**
 ```
   adding /root/.ziti/quickstart/OMSINER/ziti-bin/ziti-v0.27.5 to the path
 ```
 ```
 echo $ZITI_HOME
 ```
-Output:
+**Output:**
 ```
 /root/.ziti/quickstart/OMSINER
 ```
  
 
-Change Ziti edge admin password:
+## 1.9 Change Ziti edge admin password:
 ```
 ziti edge update authenticator updb -s
 ```
 Find the Current admin edge login password of controller:
 ```
 cat "${HOSTNAME}".env | grep "export ZITI_PWD"
-  ```
+```

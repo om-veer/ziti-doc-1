@@ -1,4 +1,9 @@
-# Create new router using open ziti
+---
+sidebar_position: 10
+sidebar_label: Router
+title: Create new router
+---
+# 1.0 Create new router using open ziti
 
 ## 1.1 Update the VM 
  
@@ -11,12 +16,13 @@ sudo apt update
 sudo apt upgrade
 ```
 
-## 1.3 Install binary into the ziti home directory using any of following 2 methods
-```
+## 1.3 Install binary
+Install binarty into the ziti home directory using any of following 2 methods
+```bash
 source /dev/stdin <<< "$(wget -qO- https://raw.githubusercontent.com/openziti/ziti/db71b1a4a6d70feff70cde3962d2c9f9148a0dd5/quickstart/docker/image/ziti-cli-functions.sh)" getZiti
 ```
 Or 
-```
+```bash
 source /dev/stdin <<< "$(wget -qO- https://get.openziti.io/quick/ziti-cli-functions.sh)"; getZiti
 ```
 Create config.yaml in the binary installed directory like ZITI_HOME=~/.ziti/quickstart/VM-hstname/ziti-bin/ziti-
@@ -82,10 +88,12 @@ forwarder:
 ```
  ./ziti edge login "CONTROLLER PUB_IP":8441   #Where 8441 is the  ZITI_EDGE_CONTROLLER_PORT. You have to provide the user name and password which you created at the time of controller installation default username is admin.
 ```
-## 1.7 Create the Edge router using 'new-router' as the name of ER and 'enroll.jwt' is the name of jwt file
-
+## 1.7 Create the Edge router
+Create the Edge router using 'new-router' as the name of ER and 'enroll.jwt' is the name of jwt file
+```
 ziti edge create edge-router $ROUTER_NAME \
 --jwt-output-file $ROUTER_NAME.jwt
+```
 ```
 ./ziti edge create edge-router new-router -t -o enroll.jwt
 ```
@@ -95,27 +103,30 @@ ziti edge create edge-router $ROUTER_NAME \
 --jwt-output-file $ROUTER_NAME.jwt \
 --tunneler-enabled --no-traversal
 
-## 1.9 Assign edge router attributes. I assign private attribute
- ```
+## 1.9 Assign edge router attributes.
+I assign private attribute
+```
  ./ziti edge update edge-router new-router -a private
 ```
-## 1.10 Register the identity create above enroll.jwt and config.yaml   
-  ```
+## 1.10 Register the identity
+the identitity created above with enroll.jwt and config.yaml   
+```
   ./ziti-router enroll config.yaml --jwt enroll.jwt
 ```
 ## 1.11 *(Optional) Update the identity using* 
- ```
+```
  ./ziti edge update identity new-router -a hosts
 ```
 ## 1.12 *(Optional) Verify the create edge router using* 
 ```
 ./ziti edge list edge-routers
 ```
-## 1.13 Run the edge router using config.yaml file   *Note: Skip this step if you follow next step(1.14)*
+## 1.13 Run the edge router using config.yaml file
+*Note: Skip this step if you follow next step(1.14)*
 ```
 ./ziti-router run config.yaml
 ```
-## 1.14 To automate the command ./ziti-router run config.yaml 
+## 1.14 Auto start the ziti-router
 Create the router.service in same directry where ziti binary downloaded
 ```
 root@ubuntu-s-1vcpu-2gb-amd-blr1-01:~/.ziti/quickstart/ubuntu-s-1vcpu-2gb-amd-blr1-01/ziti-bin/ziti-v0.27.5# cat router.service
@@ -135,7 +146,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 ```
-cp router.service /etc/systemd/system/ziti-router.service
+sudo cp router.service /etc/systemd/system/ziti-router.service
 
 sudo systemctl daemon-reload
 
@@ -167,7 +178,9 @@ resolvectl
 Now we have completed the Private ER configuration
 
 
-# Configure the config.yaml for public router: add the bellow line in link listner
+## 1.16 Configure the config.yaml for public router
+Add the bellow line in link listner
+
 Following example of Public ER in addition to config.yaml of Private ER which configured in step 1.4 
 ```
 link:
@@ -184,7 +197,7 @@ advertise: tls:165.232.177.92:10080 # 165.232.177.92 is CTRL ip and 10080 CTRL p
 options:
 outQueueSize: 4
 ```
-# Some usefull command for the ER 
+## 1.17 Some usefull command for the ER 
 - Verify ER status
 ```
 ./ziti edge list edge-routers
