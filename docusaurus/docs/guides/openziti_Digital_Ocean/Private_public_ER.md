@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 30
 sidebar_label: Router
 title: Create new router
 ---
@@ -198,25 +198,25 @@ options:
 outQueueSize: 4
 ```
 ## 1.17 Some usefull command for the ER 
-- Verify ER status
+Verify ER status
 ```
 ./ziti edge list edge-routers
 ```
-- Delete the ER
+Delete the ER
 ```
 ziti edge delete edge-routers $ROUTER_NAME
 ziti edge delete edge-routers $ROUTER_ID
 ```
-- Update the ER
+Update the ER
 ```
 ziti edge update edge-router $ROUTER_NAME [flags]
 ziti edge update edge-router $ROUTER_ID [flags]
 ```
-- example to update attributes : 
+example to update attributes : 
 ```
 ./ziti edge update edge-router new-router -a private
 ```
-- example to Update the identity using 
+example to Update the identity using 
 ```
 ./ziti edge update identity new-router -a hosts
 ```
