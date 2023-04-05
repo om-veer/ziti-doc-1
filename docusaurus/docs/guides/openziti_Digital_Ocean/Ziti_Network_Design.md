@@ -6,7 +6,7 @@ title: Ziti_Network_Design
 
 Use follwing setup to create the ziti network
 
-![Diagram](~/docusaurus/static/img/image/DO_network.png)
+![Diagram](/docusaurus/static/img/image/DO_network.png)
 
 # 1.0 Identities configuration 
 ## 1.1 Login to controller
