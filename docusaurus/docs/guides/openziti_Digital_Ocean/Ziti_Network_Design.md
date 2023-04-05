@@ -6,7 +6,7 @@ title: Ziti_Network_Design
 
 Use follwing setup to create the ziti network
 
-![Diagram](imag/DO_network.png)
+![Diagram](~/docusaurus/static/img/image/DO_network.png)
 
 # 1.0 Identities configuration 
 ## 1.1 Login to controller
@@ -171,26 +171,26 @@ Add Ip route 100.64.0.0/10 in ssh client machine towards the SG ER
 
 100.64.0.0/10 via 10.104.0.3 dev eth1 proto static
 
-![Diagram](imag/BLR_ssh_server_from_SG_ssh_client.png)
+![Diagram](~/docusaurus/static/img/image/BLR_ssh_server_from_SG_ssh_client.png)
  
 
 **Log from the Bangalore ER 10.47.0.6**
 
-![Diagram](imag/log_from_BLR_ER.png)
+![Diagram](~/docusaurus/static/img/image/log_from_BLR_ER.png)
 
 **Verification from Ubuntu tunneler OMSGUBUNTU to access the BGLCL.ziti(SSH server) using BLR ER**
 
-![Diagram](imag/from_Ubuntu_tunneler_OMSGUBUNTU_to_access_BGLCL.ziti.png)
+![Diagram](~/docusaurus/static/img/image/from_Ubuntu_tunneler_OMSGUBUNTU_to_access_BGLCL.ziti.png)
 
 **Log from BLR ER**
 
-![Diagram](imag/BLR_ER.png)
+![Diagram](~/docusaurus/static/img/image/BLR_ER.png)
  
 **Verification from ompc1 window pc to SSHSG client:**
-![Diagram](imag/ompc1_window_pc_SSHSG_client.png)
+![Diagram](~/docusaurus/static/img/image/ompc1_window_pc_SSHSG_client.png)
 
 **Log from OMSGER1**
-![Diagram](imag/Log_from_OMSGER.png)
+![Diagram](~/docusaurus/static/img/image/Log_from_OMSGER.png)
 
  
 
