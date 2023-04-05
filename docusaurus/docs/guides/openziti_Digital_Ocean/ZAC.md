@@ -94,4 +94,4 @@ Example: https://157.245.203.171:8443/
 - set url https://hostname:8441  click the setcontroller
 
 - login the username and password
-![Diagram](~/docusaurus/static/img/image/console.png)
+![Diagram](/docusaurus/static/img/image/console.png)
