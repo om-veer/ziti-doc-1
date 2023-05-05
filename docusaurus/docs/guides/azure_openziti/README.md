@@ -1,6 +1,6 @@
 ---
-sidebar_position: 10
-sidebar_label: Intro
+sidebar_position: 25
+sidebar_label: Azure Open ziti
 title: Introduction
 ---
 
