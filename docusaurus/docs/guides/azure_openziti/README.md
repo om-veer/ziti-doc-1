@@ -1,8 +1,4 @@
----
-sidebar_position: 10
-sidebar_label: Intro
-title: Introduction
----
+
 
 This guide describes the step by step procedure to create the open-ziti controller/Private/public ER/ZAC/ziti services.
 
