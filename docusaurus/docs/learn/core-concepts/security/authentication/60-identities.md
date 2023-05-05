@@ -20,21 +20,7 @@ a Ziti Network. This diagram does not show all entities, simply the ones tied cl
 the Role Attributes on an Identity are used by selectors defined on policies to act on the identity. However, the 
 policies and selectors are not modeled here.
 
-[![](https://mermaid.ink/img/pako:eNqVkcFuwjAMhl8l8pnwALlVwCQO06rBMZfQuBCtTabEOVQN746rFa3bBNJ8sv98jn_ZIzTBIijAuHXmHE2vveDYW_TkaBClrNdhFFW9lwdMyQUvlLiY9IUt5Zn8FyU3GMm1rjGE6VlLKaIOiXJEuTVklugPq8xVmS6Twn9OE-rQuWZ42MBe7rV8Dx3Kiii6U_7l588-voeE-ITb-Ri6rmfxIVTE60slj2_HWm6Cb915QU6hvfawgh5jb5zlU43TmwY20KMGxak18UOD9lfm8qflZe6sY2OgWtMlXIHJFA6Db0BRzHiH5ovP1PUG3vuwIw)](https://mermaid.live/edit#pako:eNqVkcFuwjAMhl8l8pnwALlVwCQO06rBMZfQuBCtTabEOVQN746rFa3bBNJ8sv98jn_ZIzTBIijAuHXmHE2vveDYW_TkaBClrNdhFFW9lwdMyQUvlLiY9IUt5Zn8FyU3GMm1rjGE6VlLKaIOiXJEuTVklugPq8xVmS6Twn9OE-rQuWZ42MBe7rV8Dx3Kiii6U_7l588-voeE-ITb-Ri6rmfxIVTE60slj2_HWm6Cb915QU6hvfawgh5jb5zlU43TmwY20KMGxak18UOD9lfm8qflZe6sY2OgWtMlXIHJFA6Db0BRzHiH5ovP1PUG3vuwIw)
-
 ```mermaid
-erDiagram
-    Identity ||..o{ API-Session : has
-    API-Session ||..o{ Session : has
-    API-Session ||..o{ Session-Certificates : has
-    API-Session ||..|| Posture-Data : has
-    Identity ||..|| Authentication-Policy : has
-    Identity ||..o{ Identity-Role-Attributes : has
-    Identity ||..o{ Authenticator: has
-    Identity ||..o{ Enrollment: has
-    Identity ||..o| MFA-TOTP-Config: has
-        
-
 erDiagram
     Identity ||..o{ API-Session : has
     API-Session ||..o{ Session : has
@@ -55,22 +41,25 @@ authentication mechanism. Depending on that mechanism it may also need to comple
 Please note that all authentication mechanisms also require a properly configured [authentication policy](./auth)
 
 The following [primary authentication](./auth#primary-authentication) mechanisms require post-creation enrollment:
+
 - Ziti PKI x509 Client Certificate
 - 3rd Party x509 Client Certificate
 - Username Password (UPDB)
 
 The following do not require enrollment, but must have a properly configured [External JWT Signer](./external-jwt-signers)
+
 - JWT
 
 ### Creating w/ No Authenticators/Enrollments
+
 Note: This identity will not be able to authenticate
 
-#### Ziti CLI: 
+#### Ziti CLI
 
 It is currently not possible to create and identity without an enrollment option through the CLI. It can be completed
 by creating and identity then deleting the default certificate enrollment.
 
-```
+```bash
 ziti edge create identity [device|service|user] <name>
 ziti edge delete enrollment where "identity=<id>"
 ```
@@ -78,6 +67,7 @@ ziti edge delete enrollment where "identity=<id>"
 #### Edge Management API
 
 `POST /edge/management/v1/identities`
+
 ```json
 {
   "name": "Roger Wilco",
@@ -86,9 +76,11 @@ ziti edge delete enrollment where "identity=<id>"
 ```
 
 ### Creating w/ Ziti PKI Client Cert Enrollment
+
 Note: This identity will be using the default [authentication policy](./auth) which allows certificate authentication
 
-#### Ziti CLI:
+#### Ziti CLI
+
 `ziti edge create identity [device|service|user] <name> `
 
 #### Edge Management API

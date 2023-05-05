@@ -27,7 +27,7 @@ related configuration settings.
 - [`web`](#web) - configures API presentation exposure
 - [`v`](#v) - A special section to note the version of the configuration file, only `v: 3` is currently supported
 
-The standard OpenZit experience minimally requires the following sections:
+The standard OpenZiti experience minimally requires the following sections:
 
 - `ctrl`
 - `db`
@@ -252,11 +252,19 @@ is as follows:
     - `metricFilter` - (optional) a regular expression to match the metric name value on
 - `services` - (optional) Service events
 
-The `handler` section contains two or three properties depending on `type`:
+The properties in the `handler` section depend on handler `type` (one of `file`, `stdout`, or `amqp`):
 
-- `type` - (required) the type of handler ("file" or "stdout")
-- `format` - (required) the format of events for the `type` ("json" or "plain")
-- `path` - (conditional) used the "file" `type`, the path of the output file
+- common properties for all handler types
+  - `format` - (required) the format of events for the `type` (`json` or `plain`)
+- type `file`
+  - `path` - (conditional) used the "file" `type`, the path of the output file
+- type `amqp`: note that queue and consumer options must match
+  - `url` (required) the URL of the AMQP broker to connect to
+  - `queue` (required) the name of the queue to publish events to
+  - `durable` (optional) whether the queue should be durable between broker runs (default: true)
+  - `autoDelete` (optional) whether the queue should be deleted when there are no consumers (default: false)
+  - `exclusive` (optional) whether the queue should be exclusive to a single consumer (default: false)
+  - `noWait` (optional) whether the controller should wait for the queue to confirm receipt of messages (default: false)
 
 Example JSON File Logger:
 
@@ -281,6 +289,25 @@ events:
       type: file
       format: json
       path: /tmp/ziti-events.log
+```
+
+Example amqp Logger:
+
+```yaml
+events:
+  amqpLogger:
+    subscriptions:
+      - type: fabric.usage
+        interval: 5s
+    handler:
+      type: amqp
+      format: json
+      url: amqp://guest:guest@localhost:5672
+      queue: ziti-events
+      durable: true
+      autoDelete: false
+      exclusive: false
+      noWait: false
 ```
 
 ### `healthChecks`
@@ -313,10 +340,10 @@ and routers. See the conventions that apply to all [identity](conventions.md#ide
 
 The `network` section sets network wide options.
 
-- `minRouterCost` - (optional) the minimum router cost (default 10)
-- `routerConnectionChurnLimit` -  (optional) how often a new connection from a router can take over for an existing
-  connection (
-  default 1m)
+- `minRouterCost` - (optional, 10) the minimum router cost
+- `routerConnectionChurnLimit` -  (optional, 1m) how often a new connection from a router can take over for an existing connection
+- `intervalAgeThreshold` - (optional, 80s) how old a batch of metrics must be before it's eligible to be emitted
+- `metricsReportInterval` - (optional, 1m) the frequency at which controller metrics events are emitted
 
 ### `profile`
 
@@ -326,10 +353,10 @@ interval memory profiling occurs at and is output. These settings are useful for
 be enabled in production environments without careful consideration.
 
 - `cpu` - (optional)
-    - `path` - (required) the path to output the pprof data
+  - `path` - (required) the path to output the pprof data
 - `memory` - (optional)
-    - `path` - (required) the path to output the memprof data
-    - `intervalMs` (optional, 15s) the frequency to output memprof data
+  - `path` - (required) the path to output the memprof data
+  - `intervalMs` (optional, 15s) the frequency to output memprof data
 
 ```yaml
 profile:

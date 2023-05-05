@@ -1,15 +1,24 @@
 
 # Authorization
 
-After becoming fully authenticated, an identity is now restricted by Policies and by Posture Checks.
-Policies act as static authorization configuration and are split into distinct policy types for enforcing different
-types of authorization. They are documented in detail in the `Policies` section. Posture Checks are dynamic and
-continuous authorization. Telemetry from endpoints and from external systems can be used to make dynamic authorization
-decisions. They are detailed in the `Posture Check` section.
+After becoming [fully authenticated](../sessions.md#full-vs-partial-authentication), an identity may now 
+discover services and Edge Routers available on the network via the Edge Client API they are authorized to access.
+Both service and Edge Router authorization are controlled through [policies](policies/overview.mdx). Additionally,
+service policies may have additional requirements for authorization based on the environment or attributes of a
+client in the form of [Posture Checks](posture-checks.md).
 
-[![](https://mermaid.ink/img/pako:eNpdkLFuwyAQhl_lxJyou4dWie1EWaK27lJBhitcYhQMFoZUleN3L8J1hm4c9_3fSf_IpFPECnbx2LfwUQm74Qdl6ATr9TPcG_I3LQlirzAQ0I1suMOWly3JK5ydh1c3hOgJ3iJ5TcMpCebowYYURgMys0tU2G3el-ORvp_KFu2F1MNSYcCXSdgyMxU_uiSs8rBZfmv-me_Uedrx0hlDMvyzJGCXgT1v4lenw2P7TkPv7JAd-1nNVqwj36FWqYpRWADBQksdCVakp0J_FUzYKXFzE7XSwXlWnNEMtGIYg2t-rGRF8JEWqNKYau3-qOkXa1x5og)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNpdkLFuwyAQhl_lxJyou4dWie1EWaK27lJBhitcYhQMFoZUleN3L8J1hm4c9_3fSf_IpFPECnbx2LfwUQm74Qdl6ATr9TPcG_I3LQlirzAQ0I1suMOWly3JK5ydh1c3hOgJ3iJ5TcMpCebowYYURgMys0tU2G3el-ORvp_KFu2F1MNSYcCXSdgyMxU_uiSs8rBZfmv-me_Uedrx0hlDMvyzJGCXgT1v4lenw2P7TkPv7JAd-1nNVqwj36FWqYpRWADBQksdCVakp0J_FUzYKXFzE7XSwXlWnNEMtGIYg2t-rGRF8JEWqNKYau3-qOkXa1x5og)
+Authorization to connect to an Edge Router affects the Edge Router that are discoverable by a client. This will be 
+reflected when listing a Edge Router directly and receiving a list of them during Session creation.
 
-# Authentication Policies
-
-[Authentication Policies](../authentication/authentication-policies) define which primary and secondary authentication methods are allowed for an individual
-identity and can be read more about in the [Authentication Policies](../authentication/authentication-policies) section.
+```mermaid
+graph TD
+A[Idle] --> |Service update event| B[Check for Posture Queries]
+A --> |Interval check event| B
+B --> C{New/Changed Posture Data?}
+C --> D[No]
+D --> A
+C --> E[Yes]
+E --> F[Collected Posture Data]
+F --> G[Submit Posture Responses]
+G --> A
+```
