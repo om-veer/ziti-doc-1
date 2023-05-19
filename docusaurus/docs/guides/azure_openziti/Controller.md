@@ -26,6 +26,9 @@ Once the VM is created, we can get the IP address of the VM from the Resources s
 ```bash
 ssh -i <private_key> "username"@<ip>
 ```
+## Firewall port  list
+allow port tcp 8440 - 8443 in the security group of Azure
+![Diagram](/img/azure/portcontroller.jpg)
 
 Then follow the [Host OpenZiti Anywhere](/docs/learn/quickstarts/network/hosted/) to setup the controller. You must replace the EXTERNAL_DNS with the following command before running the quickstart.
  
