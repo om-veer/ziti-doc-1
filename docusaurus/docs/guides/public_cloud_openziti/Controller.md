@@ -145,7 +145,7 @@ After the nodejs is installed, following the rest of [ZAC Setup Guide](/docs/lea
 <TabItem value="AWS">
 Azure's default firewall is blocking all incoming access to the VM. You will need to open ports you specified for controller and ZAC (if you plan to use ZAC). Here is a example of the firewall ports if you used the default ports.
 
-```![Diagram](/img/public_cloud/Controller-Firewall-Azure.jpg)
-```
+![Diagram](/img/AWS/firewall-sg-cr.jpg)
+
 </TabItem>
 </Tabs>

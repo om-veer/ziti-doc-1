@@ -21,7 +21,7 @@ import TabItem from '@theme/TabItem';
   ]}
 >
 <TabItem value="AWS">
-
+Refer to router AWS sec 2.7 and 2.8
 </TabItem>
 </Tabs>
 
@@ -62,6 +62,6 @@ systemctl restart systemd-resolved.service
   ]}
 >
 <TabItem value="AWS">
-
+Refer to router AWS sec 2.7 and 2.8
 </TabItem>
 </Tabs>

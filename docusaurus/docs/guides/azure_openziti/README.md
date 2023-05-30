@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-sidebar_label: Azure Openziti
+sidebar_label: Intro
 title: Introduction
 ---
 
