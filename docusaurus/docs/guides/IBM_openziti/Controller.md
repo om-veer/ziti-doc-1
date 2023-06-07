@@ -24,12 +24,19 @@ import TabItem from '@theme/TabItem';
 login to IBM cloud. go to dashboard. Click on classic infrastructure. Click on device list. Click on order +. Click vertual server for classic.
 
 ![Diagram](/img/IBM/create.jpg)
+
 Let default virtual server Public. Name the public instance host name.
+
 ![Diagram](/img/IBM/create1.jpg)
+
 Select the location. Select the profice Click on view all profile select the size B1, 2 CPU and 4 GB ram. Select the ssh. Click on add key +. Name the Public key and import the public ssh key and click on add. On the Operating  system select the ubuntu. Select the version ubuntu server 22.04 minimal install.
+
 ![Diagram](/img/IBM/create2.jpg)
+
 Now select the default Boot disk 25 GB. Let network interface default 100 MBPS. On the private SG and public SG. Let private VLAN auto assigned. Leave default disabled add on firewall and secondry ip address. Click on create.
+
 ![Diagram](/img/IBM/create3.jpg)
+
 </TabItem> 
 </Tabs>
 
