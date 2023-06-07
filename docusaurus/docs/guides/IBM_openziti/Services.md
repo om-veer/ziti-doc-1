@@ -18,10 +18,15 @@ import TabItem from '@theme/TabItem';
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-Refer to router AWS sec 2.7 and 2.8
+<TabItem value="IBM">
+**setup the route first**. The route is via our ER in the same DC (10.162.209.220)
+
+```
+root@Non-OpenZiti-Client:~# ip route add 11.11.11.11/32 via 10.162.209.220
+```
 </TabItem>
 </Tabs>
 
@@ -34,14 +39,15 @@ Refer to router AWS sec 2.7 and 2.8
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-Modify **/etc/systemd/resolved.conf**. Put local IP of the "local-er" into the file. For example:
+<TabItem value="IBM">
+Modify **/etc/systemd/resolved.conf**. Put External(public) IP of the "local-er" into the file. For example:
+
 ```
-DNS=10.5.0.4  #local private IP of the ER eth0
+DNS=169.38.108.24    #External Public IP of the ER eth1
 ```
-**NOTE, the IP address should match your Next hop in the route table**
 
 Restart the systemd-resolved service 
 ```bash
@@ -59,9 +65,14 @@ systemctl restart systemd-resolved.service
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-Refer to router AWS sec 2.7 and 2.8
+<TabItem value="IBM">
+The route is via our ER in the same DC (10.162.209.220). The DNS is going to resolve to 100.64.0.0/10 address.
+
+```
+sudo ip route add 100.64.0.0/10 via 10.162.209.220 dev eth0
+```
 </TabItem>
 </Tabs>

@@ -17,24 +17,19 @@ import TabItem from '@theme/TabItem';
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-login to aws console. go to EC2 dashboard. Click on instance. Lanch the instance
+<TabItem value="IBM">
+login to IBM cloud. go to dashboard. Click on classic infrastructure. Click on device list. Click on order +. Click vertual server for classic.
 
-![Diagram](/img/AWS/create1.jpg)
-Name the instance.
-![Diagram](/img/AWS/create2.jpg)
-On Quick start select the ubuntu. Select the ubuntu server 22.04 LTS. Select the instance type T2 medium
-![Diagram](/img/AWS/create3.jpg)
-Now select the key pair login. Choose the key name which you aready created. In the network setting presh edit. Choose the VPC name you want to attach. Select the subnet. Let the auto assign public IP
-![Diagram](/img/AWS/create4.jpg)
-Name the security group. Put any description name. Create the Firewall rule based on controller and ER. for controller we have to allow the TCP port 8440-8443 along with ssh port. for ER we have to allow 80, 443, 22.
-SG For the controller.
-![Diagram](/img/AWS/firewall-sg-cr.jpg)
-SG for the ER
-![Diagram](/img/AWS/firewall-sg-er.jpg)
-Now click on launch the instance.
+![Diagram](/img/IBM/create.jpg)
+Let default virtual server Public. Name the public instance host name.
+![Diagram](/img/IBM/create1.jpg)
+Select the location. Select the profice Click on view all profile select the size B1, 2 CPU and 4 GB ram. Select the ssh. Click on add key +. Name the Public key and import the public ssh key and click on add. On the Operating  system select the ubuntu. Select the version ubuntu server 22.04 minimal install.
+![Diagram](/img/IBM/create2.jpg)
+Now select the default Boot disk 25 GB. Let network interface default 100 MBPS. On the private SG and public SG. Let private VLAN auto assigned. Leave default disabled add on firewall and secondry ip address. Click on create.
+![Diagram](/img/IBM/create3.jpg)
 </TabItem> 
 </Tabs>
 
@@ -47,11 +42,12 @@ Now click on launch the instance.
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM Cloud', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="IBM">
 
-Once the VM is created, we can get the IP address of the droplet from the Resources screen. 
+Once the VM is created, we can get the IP address of the VM from the Devices screen. 
 
 Login to the VM by using user name "ubuntu", put the private key and IP address:
 ```bash
@@ -78,9 +74,10 @@ ZAC provides GUI for managing the OpenZiti network. If you prefer UI over CLI to
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="IBM">
 
 To setup npm executables, you can follow [install Node.js guide](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04).
 
@@ -140,12 +137,10 @@ After the nodejs is installed, following the rest of [ZAC Setup Guide](/docs/lea
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-Azure's default firewall is blocking all incoming access to the VM. You will need to open ports you specified for controller and ZAC (if you plan to use ZAC). Here is a example of the firewall ports if you used the default ports.
-
-![Diagram](/img/AWS/firewall-sg-cr.jpg)
-
+<TabItem value="IBM">
+IBM devices allow the all inbound untill we have to enable the hardware firewall. If we enable the H/W firewall then we need to allow the ssh, 8440-8443 for controller and ssh,80,443, intercept port for edge router.
 </TabItem>
 </Tabs>

@@ -23,10 +23,11 @@ Please follow **[Create a VM section](Controller/#11-create-a-vm-to-be-used-as-t
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-Once the VM is created, we can get the IP address of the droplet from the Resources screen. 
+<TabItem value="IBM">
+Once the VM is created, we can get the IP address of the VM from the Devices screen.  
 
 Login to the VM by using user name "ubuntu", put the private key and IP address:
 ```bash
@@ -43,13 +44,11 @@ ssh -i <private_key> "ubuntu"@<ip>
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-After disable the source and distination check we have to setup the route for non ziti client using egde router with tunneler enabled as a gateway for remote site route and 100.64.0.1/32. Select the routing table in which VM subnet exist. select the edit route then add the remote routes and 100.64.0.1/32 select the target as instance VM (ER)
-
-![Diagram](/img/AWS/route1.jpg)
-![Diagram](/img/AWS/route2.jpg)
+<TabItem value="IBM">
+IBM cloud do not have routeing table. we can setup the route directly on the VM
 </TabItem>
 </Tabs>
 
@@ -61,15 +60,11 @@ After disable the source and distination check we have to setup the route for no
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
-
-In Azure, the "Source and Destination Check" is named **IP forwarding**
-
-From your VM screen, click on the **Network Interface** of that VM. On the right side menu, choose **click Action** (like the picture below). **select source and destination check** then **untick the enable**
-![Diagram](/img/AWS/source-check0.jpg)
-![Diagram](/img/AWS/source-check.jpg)
+<TabItem value="IBM">
+Not applicable
 </TabItem>
 </Tabs>
 
@@ -81,19 +76,11 @@ From your VM screen, click on the **Network Interface** of that VM. On the right
       { label: 'Azure', value: 'Azure', },
       { label: 'AWS', value: 'AWS', },
       { label: 'Google Cloud', value: 'GCP', },
+      { label: 'IBM', value: 'IBM', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="IBM">
 
-AWS default firewall is blocking all incoming access to the VM. You will need the following ports open for your ERs:
-
-- 443/TCP (default port for edge listener)
-- 80/TCP (default port for link listener)
-- 53/UDP (when using as local gw)
-- 22/TCP (SSH access)
-- 8080/TCP (HTTP testing from non ziti client)
-
-Following is the firewall setting for edge router which is using the GW for non ziti client.
-![Diagram](/img/AWS/firewall-sg-er-nonziti.jpg)
+IBM cloud by default does not setup firewall for the VM.
 </TabItem>
 </Tabs>
