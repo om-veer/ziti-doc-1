@@ -97,5 +97,10 @@ Now save the iptables rule to permanentaly.
 sudo chmod +7 /etc/iptables/rules.v4
 sudo iptables-save > /etc/iptables/rules.v4
 ```
+
+To allow the http and dns port from non ziti client to local router, we also need to allow the local ingress security list for VCN.
+
+![Diagram](/img/OCP/firewall.jpg)
+
 </TabItem>
 </Tabs>
