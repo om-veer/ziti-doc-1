@@ -11,47 +11,36 @@ import TabItem from '@theme/TabItem';
 ## 1.1 Create a VM to be used as the Controller
 
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
-login to aws console. go to EC2 dashboard. Click on instance. Lanch the instance
+<TabItem value="OCP">
+login to OCP console. go to Home dashboard. Click on instance. Create the instance.Name the instance. Choose the compartment. Create a new compartment if you has not created before. Select the default placement. Let security disabled 
 
-![Diagram](/img/AWS/create1.jpg)
-Name the instance.
-![Diagram](/img/AWS/create2.jpg)
-On Quick start select the ubuntu. Select the ubuntu server 22.04 LTS. Select the instance type T2 medium
-![Diagram](/img/AWS/create3.jpg)
-Now select the key pair login. Choose the key name which you aready created. In the network setting presh edit. Choose the VPC name you want to attach. Select the subnet. Let the auto assign public IP
-![Diagram](/img/AWS/create4.jpg)
-Name the security group. Put any description name. Create the Firewall rule based on controller and ER. for controller we have to allow the TCP port 8440-8443 along with ssh port. for ER we have to allow 80, 443, 22.
-SG For the controller.
-![Diagram](/img/AWS/firewall-sg-cr.jpg)
-SG for the ER
-![Diagram](/img/AWS/firewall-sg-er.jpg)
-Now click on launch the instance.
+![Diagram](/img/OCP/create1.jpg)
+On Image and shape click change image icon. Select the ubuntu icon. Select the conical ubuntu 22.04. Select the any image build.
+On shape click change shape. Select virtual machine. Shape series intel. Select shape name VM.standerd3.Flex. On security drop down select no of CPU 2 and memory 4 GB.
+![Diagram](/img/OCP/create2.jpg)
+On the networking section. On primary network, select the existing virtual cloud network. Select the existing subnet. In public IPv4 check the assign public IP address. 
+![Diagram](/img/OCP/create3.jpg)
+in the add SSH key section upload a public key file or paste the existing public key. Let default boot volume. Now click on create.
+![Diagram](/img/OCP/create4.jpg)
 </TabItem> 
 </Tabs>
 
 ## 1.2 Login and Setup Controller
 
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="OCP">
 
-Once the VM is created, we can get the IP address of the droplet from the Resources screen. 
+Once the VM is created, we can get the IP address of the VM from the instance screen. 
 
 Login to the VM by using user name "ubuntu", put the private key and IP address:
 ```bash
@@ -72,15 +61,12 @@ This ensures the Controller setup by the quickstart is advertising the external 
 ZAC provides GUI for managing the OpenZiti network. If you prefer UI over CLI to manage network, please following the [ZAC Setup Guide](/docs/learn/quickstarts/zac/) to setup ZAC before going to the next section.
 
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="OCP">
 
 To setup npm executables, you can follow [install Node.js guide](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04).
 
@@ -134,18 +120,44 @@ After the nodejs is installed, following the rest of [ZAC Setup Guide](/docs/lea
 
 ## 1.4 Firewall
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
-Azure's default firewall is blocking all incoming access to the VM. You will need to open ports you specified for controller and ZAC (if you plan to use ZAC). Here is a example of the firewall ports if you used the default ports.
+<TabItem value="OCP">
 
-![Diagram](/img/AWS/firewall-sg-cr.jpg)
+---
+
+OCP's by default Iptables firewall is blocking all incoming access to the VM. 
+You will need to open ports you specified for controller and ZAC (if you plan to use ZAC). 
+Here is a example of the firewall ports if you used the default ports.
+
+ - `8440/tcp`: Edge Controller providing router control plane
+ - `8441/tcp`: Edge Controller providing client sessions
+ - `8442/tcp`: Edge Router providing client connections
+ - `8443/tcp`: Ziti Admin Console (ZAC) [optional]
+ - `10080/tcp`: Fabric link connectivity from Customer router to Controller
+ - `80/443/tcp`: Public ER to controller connectivity  
+### controller ports:
+
+```
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8440 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8441 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8442 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8443 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 10080 -j ACCEPT
+
+```
+
+### To make above iptables permanent save the above rules to rules.v4 file
+sudo chmod +7 /etc/iptables/rules.v4
+
+sudo iptables-save > /etc/iptables/rules.v4
+
+---
 
 </TabItem>
 </Tabs>

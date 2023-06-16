@@ -17,15 +17,12 @@ Please follow **[Create a VM section](Controller/#11-create-a-vm-to-be-used-as-t
 ## 2.2 Login and Update the repo and apps on VM
 
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="OCP">
 Once the VM is created, we can get the IP address of the droplet from the Resources screen. 
 
 Login to the VM by using user name "ubuntu", put the private key and IP address:
@@ -37,63 +34,68 @@ ssh -i <private_key> "ubuntu"@<ip>
 
 ## 2.7 Route Table 
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
-After disable the source and distination check we have to setup the route for non ziti client using egde router with tunneler enabled as a gateway for remote site route and 100.64.0.1/32. Select the routing table in which VM subnet exist. select the edit route then add the remote routes and 100.64.0.1/32 select the target as instance VM (ER)
+<TabItem value="OCP">
+We have to setup the route for non ziti client using egde router with tunneler enabled as a gateway. For remote site add route of subnet 100.64.0.0/10 and 11.11.11.11/32 as per following image. Select the default routing table in which VM subnet exist. select the add route rules then add the route rule. Select the target type Private IP destination type CIDR block and destination CIDR block 100.64.0.0/10 and 11.11.11.11/32 select the target as private IP of instance VM (ER). Then click the add route rules
 
-![Diagram](/img/AWS/route1.jpg)
-![Diagram](/img/AWS/route2.jpg)
+![Diagram](/img/OCP/ip-route1.jpg)
+![Diagram](/img/OCP/ip-route2.jpg)
 </TabItem>
 </Tabs>
 
 ## 2.8 Source and Destination Check
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="OCP">
 
-In Azure, the "Source and Destination Check" is named **IP forwarding**
+As per following image , check the "skip Source/Destination Check"
 
-From your VM screen, click on the **Network Interface** of that VM. On the right side menu, choose **click Action** (like the picture below). **select source and destination check** then **untick the enable**
-![Diagram](/img/AWS/source-check0.jpg)
-![Diagram](/img/AWS/source-check.jpg)
+From your instance screen, come down left to resource click on the **attach NIC** of that VM. On the right side menu, choose **3 dots** (like the picture below).click edit NIC . **select skip Source/Destination Check** then **tick and save changes**
+![Diagram](/img/OCP/ip-forword1.jpg)
+![Diagram](/img/OCP/ip-forword2.jpg)
 </TabItem>
 </Tabs>
 
 ## 2.9 Firewall
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="OCP">
 
-AWS default firewall is blocking all incoming access to the VM. You will need the following ports open for your ERs:
+OCP default firewall is iptables which is blocking all incoming access to the VM. You will need the following ports open for your ERs:
 
 - 443/TCP (default port for edge listener)
 - 80/TCP (default port for link listener)
 - 53/UDP (when using as local gw)
-- 22/TCP (SSH access)
+- 22/TCP (SSH access, this rule by default allowed in iptable rule)
 - 8080/TCP (HTTP testing from non ziti client)
 
-Following is the firewall setting for edge router which is using the GW for non ziti client.
-![Diagram](/img/AWS/firewall-sg-er-nonziti.jpg)
+public ER:
+```
+sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
+```
+local er 
+```
+sudo iptables -I INPUT 1 -p udp --dport 53 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 53 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 8080 -j ACCEPT
+```
+Now save the iptables rule to permanentaly.
+```
+sudo chmod +7 /etc/iptables/rules.v4
+sudo iptables-save > /etc/iptables/rules.v4
+```
 </TabItem>
 </Tabs>

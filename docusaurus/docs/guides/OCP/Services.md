@@ -12,34 +12,37 @@ import TabItem from '@theme/TabItem';
 
 #### 3.6.7.1 Test IP intercept
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
-Refer to router AWS sec 2.7 and 2.8
+<TabItem value="OCP">
+TO test the connectivity from non ziti client we have to do 2 things
+
+1- add the route in the OCP routering table
+
+go to router sec 2.7
+
+2- disable the source/destination check from the local-ER
+
+Go to router sec 2.8
+
 </TabItem>
 </Tabs>
 
 #### 3.6.7.2 Modify the resolver
 
 <Tabs
-  defaultValue="DigitalOcean"
+  defaultValue="OCP"
   values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
+      { label: 'OCP', value: 'OCP', },
   ]}
 >
-<TabItem value="AWS">
+<TabItem value="OCP">
 Modify **/etc/systemd/resolved.conf**. Put local IP of the "local-er" into the file. For example:
 ```
-DNS=10.5.0.4  #local private IP of the ER eth0
+DNS=10.0.0.115  #local private IP of the ER eth0
 ```
 **NOTE, the IP address should match your Next hop in the route table**
 
@@ -51,17 +54,3 @@ systemctl restart systemd-resolved.service
 </TabItem>
 </Tabs>
 
-#### 3.6.7.3 Test DNS intercept
-<Tabs
-  defaultValue="DigitalOcean"
-  values={[
-      { label: 'Digital Ocean', value: 'DigitalOcean', },
-      { label: 'Azure', value: 'Azure', },
-      { label: 'AWS', value: 'AWS', },
-      { label: 'Google Cloud', value: 'GCP', },
-  ]}
->
-<TabItem value="AWS">
-Refer to router AWS sec 2.7 and 2.8
-</TabItem>
-</Tabs>
