@@ -129,7 +129,7 @@ After the nodejs is installed, following the rest of [ZAC Setup Guide](/docs/lea
 
 ---
 
-OCP's by default Iptables firewall is blocking all incoming access to the VM. 
+OCP's by default Iptables/ufw(if ufw is enable) firewall is blocking all incoming access to the VM. If you not enable the ufw rule then you must have to configurethe following entry in the iptables rule.
 You will need to open ports you specified for controller and ZAC (if you plan to use ZAC). 
 Here is a example of the firewall ports if you used the default ports.
 
@@ -140,24 +140,28 @@ Here is a example of the firewall ports if you used the default ports.
  - `10080/tcp`: Fabric link connectivity from Customer router to Controller
  - `80/443/tcp`: Public ER to controller connectivity  
 ### controller ports:
-
+if you enable the ufw firewall rule in OCP you must have to reboot the VM after applying the ufw rule.
+UFW rules will takeover the iptables rule.
 ```
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8440 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8441 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8442 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8443 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 10080 -j ACCEPT
-
+ sudo ufw allow 80/tcp
+ sudo ufw allow 8440/tcp
+ sudo ufw allow 8441/tcp
+ sudo ufw allow 8442/tcp
+ sudo ufw allow 8443/tcp
+ sudo ufw allow 10080/tcp
+ sudo ufw reload
+ sudo reboot
 ```
 
-### To make above iptables permanent save the above rules to rules.v4 file
-sudo chmod +7 /etc/iptables/rules.v4
+### Same above entry need to configure in the OCP VCN security group.
+click on 3 top left 3 line. Select the networking icon. select the virtual cloud networking. select the VCN. On the left down select the network security group. Select the create network security group. Name the security group and select the next. Now put the above entry in the inbound direction. Let everything open in the outbound direction.
+Use following entry in OCP SG for controller
 
-sudo iptables-save > /etc/iptables/rules.v4
+![Diagram](/img/OCP/cnfw.jpg)
 
----
+Then attach the above SG to the instance as bellow. select the network security group and select the edit. now select the security group from the drop down ans press save.
+
+![Diagram](/img/OCP/cnfw1.jpg)
 
 </TabItem>
 </Tabs>

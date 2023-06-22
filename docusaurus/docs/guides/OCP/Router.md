@@ -73,7 +73,7 @@ From your instance screen, come down left to resource click on the **attach NIC*
 >
 <TabItem value="OCP">
 
-OCP default firewall is iptables which is blocking all incoming access to the VM. You will need the following ports open for your ERs:
+OCP default firewall is iptables/ufw(if enableed) which is blocking all incoming access to the VM. You will need the following ports open for your ERs:
 
 - 443/TCP (default port for edge listener)
 - 80/TCP (default port for link listener)
@@ -83,24 +83,25 @@ OCP default firewall is iptables which is blocking all incoming access to the VM
 
 public ER:
 ```
-sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
+sudo ufw allow 80/tcp
 ```
 local er 
 ```
-sudo iptables -I INPUT 1 -p udp --dport 53 -j ACCEPT
-sudo iptables -I INPUT 1 -p tcp --dport 53 -j ACCEPT
-sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
-sudo iptables -I INPUT 1 -p tcp --dport 8080 -j ACCEPT
-```
-Now save the iptables rule to permanentaly.
-```
-sudo chmod +7 /etc/iptables/rules.v4
-sudo iptables-save > /etc/iptables/rules.v4
+sudo ufw allow 80/tcp
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+sudo ufw allow 8080/tcp
 ```
 
-To allow the http and dns port from non ziti client to local router, we also need to allow the local ingress security list for VCN.
+click on 3 top left 3 line. Select the networking icon. select the virtual cloud networking. select the VCN. On the left down select the network security group. Select the create network security group. Name the security group and select the next. Now put the above entry in the inbound direction. Let everything open in the outbound direction.
+Use following entry in OCP SG for ER
 
-![Diagram](/img/OCP/firewall.jpg)
+![Diagram](/img/OCP/erfw.jpg)
+
+Then attach the above SG to the instance as bellow. select the network security group and select the edit. now select the security group from the drop down ans press save.
+
+![Diagram](/img/OCP/cnfw1.jpg)
+
 
 </TabItem>
 </Tabs>
