@@ -19,14 +19,21 @@ import TabItem from '@theme/TabItem';
 <TabItem value="OCP">
 login to OCP console. go to Home dashboard. Click on instance. Create the instance.Name the instance. Choose the compartment. Create a new compartment if you has not created before. Select the default placement. Let security disabled 
 
-![Diagram](/img/OCP/create1.jpg)
+![Diagram](../../../static/img/OCP/create1.jpg)
+
 On Image and shape click change image icon. Select the ubuntu icon. Select the conical ubuntu 22.04. Select the any image build.
 On shape click change shape. Select virtual machine. Shape series intel. Select shape name VM.standerd3.Flex. On security drop down select no of CPU 2 and memory 4 GB.
-![Diagram](/img/OCP/create2.jpg)
+
+![Diagram](../../../static/img/OCP/create2.jpg)
+
 On the networking section. On primary network, select the existing virtual cloud network. Select the existing subnet. In public IPv4 check the assign public IP address. 
-![Diagram](/img/OCP/create3.jpg)
+
+![Diagram](../../../static/img/OCP/create3.jpg)
+
 in the add SSH key section upload a public key file or paste the existing public key. Let default boot volume. Now click on create.
-![Diagram](/img/OCP/create4.jpg)
+
+![Diagram](../../../static/img/OCP/create4.jpg)
+
 </TabItem> 
 </Tabs>
 
@@ -157,11 +164,11 @@ UFW rules will takeover the iptables rule.
 click on 3 top left 3 line. Select the networking icon. select the virtual cloud networking. select the VCN. On the left down select the network security group. Select the create network security group. Name the security group and select the next. Now put the above entry in the inbound direction. Let everything open in the outbound direction.
 Use following entry in OCP SG for controller
 
-![Diagram](/img/OCP/cnfw.jpg)
+![Diagram](../../../static/img/OCP/cnfw.jpg)
 
 Then attach the above SG to the instance as bellow. select the network security group and select the edit. now select the security group from the drop down ans press save.
 
-![Diagram](/img/OCP/cnfw1.jpg)
+![Diagram](../../../static/img/OCP/cnfw1.jpg)
 
 </TabItem>
 </Tabs>

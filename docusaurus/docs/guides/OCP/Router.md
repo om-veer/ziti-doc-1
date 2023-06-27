@@ -42,8 +42,9 @@ ssh -i <private_key> "ubuntu"@<ip>
 <TabItem value="OCP">
 We have to setup the route for non ziti client using egde router with tunneler enabled as a gateway. For remote site add route of subnet 100.64.0.0/10 and 11.11.11.11/32 as per following image. Select the default routing table in which VM subnet exist. select the add route rules then add the route rule. Select the target type Private IP destination type CIDR block and destination CIDR block 100.64.0.0/10 and 11.11.11.11/32 select the target as private IP of instance VM (ER). Then click the add route rules
 
-![Diagram](/img/OCP/ip-route1.jpg)
-![Diagram](/img/OCP/ip-route2.jpg)
+![Diagram](../../../static/img/OCP/ip-route1.jpg)
+![Diagram](../../../static/img/OCP/ip-route2.jpg)
+
 </TabItem>
 </Tabs>
 
@@ -59,8 +60,8 @@ We have to setup the route for non ziti client using egde router with tunneler e
 As per following image , check the "skip Source/Destination Check"
 
 From your instance screen, come down left to resource click on the **attach NIC** of that VM. On the right side menu, choose **3 dots** (like the picture below).click edit NIC . **select skip Source/Destination Check** then **tick and save changes**
-![Diagram](/img/OCP/ip-forword1.jpg)
-![Diagram](/img/OCP/ip-forword2.jpg)
+![Diagram](../../../static/img/OCP/ip-forword1.jpg)
+![Diagram](../../../static/img/OCP/ip-forword2.jpg)
 </TabItem>
 </Tabs>
 
@@ -96,11 +97,11 @@ sudo ufw allow 8080/tcp
 click on 3 top left 3 line. Select the networking icon. select the virtual cloud networking. select the VCN. On the left down select the network security group. Select the create network security group. Name the security group and select the next. Now put the above entry in the inbound direction. Let everything open in the outbound direction.
 Use following entry in OCP SG for ER
 
-![Diagram](/img/OCP/erfw.jpg)
+![Diagram](../../../static/img/OCP/erfw.jpg)
 
 Then attach the above SG to the instance as bellow. select the network security group and select the edit. now select the security group from the drop down ans press save.
 
-![Diagram](/img/OCP/cnfw1.jpg)
+![Diagram](../../../static/img/OCP/cnfw1.jpg)
 
 
 </TabItem>
